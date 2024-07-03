@@ -3,9 +3,10 @@ package br.com.ifpe.oxefood.modelo.entregador;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -57,5 +58,15 @@ public class EntregadorService {
           entregador.setVersao(entregador.getVersao() + 1);
           repository.save(entregador);
      }
+
+     @Transactional
+     public void delete(Long id) {
+ 
+         Entregador entregador = repository.findById(id).get();
+         entregador.setHabilitado(Boolean.FALSE);
+         entregador.setVersao(entregador.getVersao() + 1);
+ 
+         repository.save(entregador);
+     }     
 
 }
