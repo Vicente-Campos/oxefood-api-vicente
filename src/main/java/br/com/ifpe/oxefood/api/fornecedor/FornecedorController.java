@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.fornecedor.Fornecedor;
 import br.com.ifpe.oxefood.modelo.fornecedor.FornecedorService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/api/fornecedor")
@@ -26,6 +27,9 @@ public class FornecedorController {
     @Autowired
     private FornecedorService fornecedorService;
 
+    @Operation(
+       summary = "Serviço responsável por salvar um fornecedor no sistema."
+    )
     @PostMapping
     public ResponseEntity<Fornecedor> save(@RequestBody FornecedorRequest request) {
 
@@ -33,17 +37,26 @@ public class FornecedorController {
         return new ResponseEntity<Fornecedor>(fornecedor, HttpStatus.CREATED);
     }
 
+    @Operation(
+       summary = "Serviço responsável por listar todos os fornecedores no sistema."
+    )
     @GetMapping
     public List<Fornecedor> listarTodos() {
         return fornecedorService.listarTodos();
     }
 
+    @Operation(
+       summary = "Serviço responsável por listar um fornecedor no sistema atravé do ID."
+    )
     @GetMapping("/{id}")
     public Fornecedor obterPorID(@PathVariable Long id) {
         return fornecedorService.obterPorID(id);
     }
 
 
+    @Operation(
+       summary = "Serviço responsável por deletar um fornecedor no sistema através do ID."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 
