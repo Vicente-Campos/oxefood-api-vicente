@@ -13,28 +13,30 @@ import lombok.NoArgsConstructor;
 
 public class ProdutoRequest {
 
-   private String codigo;
+    private Long idCategoria;
 
-   private String titulo;
+    private String codigo;
 
-   private String descricao;
+    private String titulo;
 
-   private double valorUnitario;
+    private String descricao;
 
-   private int tempoEntregaMinimo;
-   
-   private int tempoEntregaMaximo;
+    private double valorUnitario;
 
-   public Produto build() {
+    private int tempoEntregaMinimo;
 
-       return Produto.builder()
-           .codigo(codigo)
-           .titulo(titulo)
-           .descricao(descricao)
-           .valorUnitario(valorUnitario)
-           .tempoEntregaMinimo(tempoEntregaMinimo)
-           .tempoEntregaMaximo(tempoEntregaMaximo)
-           .build();
-   }
+    private int tempoEntregaMaximo;
+
+    public Produto build() {
+
+        return Produto.builder()
+                .codigo(codigo)
+                .titulo(titulo)
+                .descricao(descricao)
+                .valorUnitario(valorUnitario)
+                .tempoEntregaMinimo(tempoEntregaMinimo)
+                .tempoEntregaMaximo(tempoEntregaMaximo)
+                .build();
+    }
 
 }
