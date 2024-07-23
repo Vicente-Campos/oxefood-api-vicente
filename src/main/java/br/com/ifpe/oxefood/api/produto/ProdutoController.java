@@ -25,13 +25,16 @@ import io.swagger.v3.oas.annotations.Operation;
 @CrossOrigin
 
 public class ProdutoController {
-    @Autowired
-    private ProdutoService produtoService;
 
     @Autowired
     private CategoriaService categoriaService;
 
-    @Operation(summary = "Serviço responsável por salvar um produto no sistema.")
+    @Autowired
+    private ProdutoService produtoService;
+
+    @Operation(
+       summary = "Serviço responsável por salvar um produto no sistema."
+    )
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
 
@@ -39,6 +42,7 @@ public class ProdutoController {
         produtoNovo.setCategoria(categoriaService.obterPorID(request.getIdCategoria()));
         Produto produto = produtoService.save(produtoNovo);
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
+
     }
 
     @Operation(summary = "Serviço responsável por listar todos os produto no sistema.")
@@ -62,6 +66,7 @@ public class ProdutoController {
         produtoService.update(id, produto);
 
         return ResponseEntity.ok().build();
+
     }
 
     @Operation(summary = "Serviço responsável por deletar um produto no sistema através do ID.")
