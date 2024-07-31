@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
 import br.com.ifpe.oxefood.modelo.cliente.EnderecoCliente;
+import br.com.ifpe.oxefood.modelo.produto.Produto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
@@ -36,6 +38,15 @@ public class ClienteController {
         Cliente cliente = clienteService.save(request.build());
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Serviço responsável por filtrar os cliente no sistema através do nome e cpf.")
+    @PostMapping("/filtrar")
+    public List<Cliente> filtrar(
+           @RequestParam(value = "nome", required = false) String nome,
+           @RequestParam(value = "cpf", required = false) String cpf) {
+
+       return clienteService.filtrar(nome, cpf);
+   }
 
     @Operation(summary = "Serviço responsável por listar todos os cliente no sistema.")
     @GetMapping
@@ -87,5 +98,6 @@ public class ClienteController {
         clienteService.removerEnderecoCliente(enderecoId);
         return ResponseEntity.noContent().build();
     }
+
 
 }

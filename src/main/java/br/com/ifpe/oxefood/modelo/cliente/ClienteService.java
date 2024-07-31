@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.produto.Produto;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -117,5 +118,25 @@ public class ClienteService {
         cliente.setVersao(cliente.getVersao() + 1);
         repository.save(cliente);
     }
+
+    public List<Cliente> filtrar(String nome, String cpf) {
+
+          List<Cliente> listaCliente = repository.findAll();
+   
+          if ((cpf != null && !"".equals(cpf)) &&
+              (nome == null || "".equals(nome))) {
+                listaCliente = repository.consultarPorCpf(cpf);
+          } else if (
+              (cpf == null || "".equals(cpf)) &&
+              (nome != null && !"".equals(nome))) {    
+                listaCliente = repository.findByNomeContainingIgnoreCaseOrderByNomeAsc(nome);
+          } else if (
+              (cpf == null || "".equals(cpf)) &&
+              (nome != null && !"".equals(nome))) {
+                listaCliente = repository.consultarPorNomeECpf(nome, cpf); 
+          }
+   
+          return listaCliente;
+   }
 
 }
