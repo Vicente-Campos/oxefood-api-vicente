@@ -14,7 +14,7 @@ import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "EnderecoClinte")
+@Table(name = "EnderecoCliente")
 @SQLRestriction("habilitado = true")
 
 @Builder
