@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
 import br.com.ifpe.oxefood.modelo.cliente.EnderecoCliente;
-import br.com.ifpe.oxefood.modelo.produto.Produto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
