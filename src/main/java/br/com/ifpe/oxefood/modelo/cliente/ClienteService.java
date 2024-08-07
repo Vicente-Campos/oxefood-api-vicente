@@ -24,7 +24,7 @@ public class ClienteService {
     @Transactional
     public Cliente save(Cliente cliente) {
 
-          if(!cliente.getFoneCelular().startsWith("81")){
+          if(!cliente.getFoneCelular().startsWith("(81)")){
              throw new ClienteException(ClienteException.MSG_NUMERO_NAO_TEM_DDD_81);
           }     
 

@@ -3,7 +3,8 @@ package br.com.ifpe.oxefood.api.entregador;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import br.com.ifpe.oxefood.modelo.entregador.Entregador;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,8 @@ import lombok.NoArgsConstructor;
 
 public class EntregadorRequest {
 
+    @NotNull(message = "O Nome é de preenchimento obrigatório")
+    @NotEmpty(message = "O Nome é de preenchimento obrigatório")
     private String nome;
 
     private String cpf;
