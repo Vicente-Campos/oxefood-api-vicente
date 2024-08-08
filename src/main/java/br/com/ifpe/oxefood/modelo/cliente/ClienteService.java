@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.util.exception.ClienteException;
 import jakarta.transaction.Transactional;
 
@@ -20,6 +21,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Transactional
     public Cliente save(Cliente cliente) {
@@ -27,6 +30,8 @@ public class ClienteService {
           if(!cliente.getFoneCelular().startsWith("(81)")){
              throw new ClienteException(ClienteException.MSG_NUMERO_NAO_TEM_DDD_81);
           }     
+
+        usuarioService.save(cliente.getUsuario());
 
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
