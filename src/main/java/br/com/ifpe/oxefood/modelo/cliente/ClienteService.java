@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.util.exception.ClienteException;
 import jakarta.transaction.Transactional;
@@ -25,7 +26,7 @@ public class ClienteService {
     private UsuarioService usuarioService;
 
     @Transactional
-    public Cliente save(Cliente cliente) {
+    public Cliente save(Cliente cliente, Usuario usuarioLogado) {
 
           if(!cliente.getFoneCelular().startsWith("(81)")){
              throw new ClienteException(ClienteException.MSG_NUMERO_NAO_TEM_DDD_81);
@@ -36,6 +37,8 @@ public class ClienteService {
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
+        cliente.setCriadoPor(usuarioLogado);
+
         return repository.save(cliente);
     }
 
@@ -50,7 +53,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public void update(Long id, Cliente clienteAlterado) {
+    public void update(Long id, Cliente clienteAlterado, Usuario usuarioLogado) {
 
         Cliente cliente = repository.findById(id).get();
         cliente.setNome(clienteAlterado.getNome());
@@ -60,6 +63,9 @@ public class ClienteService {
         cliente.setFoneFixo(clienteAlterado.getFoneFixo());
 
         cliente.setVersao(cliente.getVersao() + 1);
+        cliente.setDataUltimaModificacao(LocalDate.now());
+        cliente.setUltimaModificacaoPor(usuarioLogado);
+
         repository.save(cliente);
     }
 
