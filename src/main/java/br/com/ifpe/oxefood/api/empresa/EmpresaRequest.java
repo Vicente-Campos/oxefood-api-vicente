@@ -47,6 +47,7 @@ public class EmpresaRequest {
 	    return Usuario.builder()
 		    .username(email)
 		    .password(password)
+			.perfil(perfil)
 		    .build();
 	    }
 

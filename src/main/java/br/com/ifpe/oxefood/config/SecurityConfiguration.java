@@ -41,6 +41,8 @@ public class SecurityConfiguration {
 
                 .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/empresa").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/empresa").permitAll()
 
                 //Configuração de autorizações de acesso para Produto
 

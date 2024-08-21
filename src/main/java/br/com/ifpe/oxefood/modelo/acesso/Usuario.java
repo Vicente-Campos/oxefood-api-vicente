@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +37,8 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
     public static final String ROLE_EMPRESA_ADMIN = "EMPRESA_ADMIN"; // READ, DELETE, WRITE, UPDATE.
     public static final String ROLE_EMPRESA_USER = "EMPRESA_USER"; // READ, WRITE, UPDATE.
 
+   @Column(nullable = false)
+   private String perfil;
 
    @Column(nullable = false, unique = true)
    private String username;
@@ -51,7 +54,9 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
 
    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles.stream()
+        .map(role -> new SimpleGrantedAuthority(role))
+        .toList();
     }
 
     @Override
@@ -61,6 +66,10 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getPerfil() {
+        return perfil;
     }
 
     @Override
