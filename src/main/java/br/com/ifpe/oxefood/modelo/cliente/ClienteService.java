@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
+import br.com.ifpe.oxefood.modelo.mensagens.EmailService;
 import br.com.ifpe.oxefood.util.exception.ClienteException;
 import jakarta.transaction.Transactional;
 
@@ -16,8 +17,10 @@ import jakarta.transaction.Transactional;
 public class ClienteService {
 
     @Autowired
-    private EnderecoClienteRepository enderecoClienteRepository;
+    private EmailService emailService;
 
+    @Autowired
+    private EnderecoClienteRepository enderecoClienteRepository;
 
     @Autowired
     private ClienteRepository repository;
@@ -28,9 +31,9 @@ public class ClienteService {
     @Transactional
     public Cliente save(Cliente cliente, Usuario usuarioLogado) {
 
-          if(!cliente.getFoneCelular().startsWith("(81)")){
+        if(!cliente.getFoneCelular().startsWith("(81)")){
              throw new ClienteException(ClienteException.MSG_NUMERO_NAO_TEM_DDD_81);
-          }     
+        }     
 
         usuarioService.save(cliente.getUsuario());
 
@@ -38,6 +41,9 @@ public class ClienteService {
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
         cliente.setCriadoPor(usuarioLogado);
+
+        // Comentar a linha abaixo quando não quiser mandar e-mail
+        emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
 
         return repository.save(cliente);
     }
